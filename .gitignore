@@ -1,0 +1,7 @@
+api_key.txt
+build/
+bin/
+lib/
+*.iml
+.idea
+.gradle
