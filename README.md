@@ -1,4 +1,4 @@
-##Weather
+# Weather
 
 - A simple program to warn me if it is going to rain and any other weather things.
 
