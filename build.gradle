@@ -33,8 +33,9 @@ checkstyle {
 }
 
 run {
-   systemProperty 'apiKey', (project.hasProperty('apiKey') ? project.getProperty('apiKey') : '')  // if property is not set, don't show error in IntelliJ
+   systemProperty 'apiKey', new File("api_key.txt").text
 }
+
 
 // Define the main class for the application
 mainClassName = 'com.erik.weatherforecast.App'

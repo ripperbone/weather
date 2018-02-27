@@ -3,7 +3,12 @@ package com.erik.weatherforecast;
 import static com.erik.weatherforecast.WeatherForecast.retrieveHourlyForecast;
 import static com.erik.weatherforecast.WeatherForecast.waukesha;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import tk.plogitech.darksky.forecast.ForecastException;
@@ -33,24 +38,27 @@ public class App {
         return dataPoints.stream().map(DataPoint::getPrecipProbability).collect(Collectors.toList());
     }
 
+    private static List<String> buildSummary(List<DataPoint> dataPoints) {
+        return dataPoints.stream().map(dataPoint -> String.format("%s: %s %.2f°C %.2f",
+                formatDateTime(dataPoint.getTime()), dataPoint.getSummary(), dataPoint.getTemperature(), dataPoint.getPrecipProbability())).collect(Collectors.toList());
+    }
+
+    private static String formatDateTime(Instant instant) {
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US)
+                .withZone(ZoneId.of("US/Central")).format(instant);
+    }
+
     public static void main(String[] args) throws Exception {
 
         try {
-            List<DataPoint> hourlyForecastData = retrieveHourlyForecast(waukesha()).subList(0, 8);
-
-
-
-
+            List<DataPoint> hourlyForecastData = retrieveHourlyForecast(waukesha());
 
             System.out.println(String.format("The precipitation potential is %s and the average temperature is %.2f degrees Celsius",
                    precipitationPotentialDescription(hourlyForecastData),
                    averageTemperature(hourlyForecastData)));
 
-            System.out.println("Precipitation");
-            System.out.println(getPrecipitationProbabilities(hourlyForecastData));
+            buildSummary(hourlyForecastData).forEach(summary -> System.out.println(summary));
 
-            System.out.println("Temperature");
-            System.out.println(getTemperatures(hourlyForecastData));
         } catch (ForecastException ex) {
             System.out.println("Could not retrieve weather data " + ex);
         }
