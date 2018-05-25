@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -15,6 +16,8 @@ import tk.plogitech.darksky.forecast.ForecastException;
 import tk.plogitech.darksky.forecast.model.DataPoint;
 
 public class App {
+
+    private static final ZoneId TIME_ZONE_US_CENTRAL = ZoneId.of("US/Central");
 
 
     private static boolean precipitationPotentialHigh(List<DataPoint> dataPoints) {
@@ -45,13 +48,14 @@ public class App {
 
     private static String formatDateTime(Instant instant) {
         return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US)
-                .withZone(ZoneId.of("US/Central")).format(instant);
+                .withZone(TIME_ZONE_US_CENTRAL).format(instant);
     }
 
     public static void main(String[] args) throws Exception {
 
         try {
-            List<DataPoint> hourlyForecastData = retrieveHourlyForecast(waukesha());
+            List<DataPoint> hourlyForecastData = retrieveHourlyForecast(waukesha()).stream().filter(dataPoint ->
+                    dataPoint.getTime().isBefore(Instant.now().plus(8, ChronoUnit.HOURS))).collect(Collectors.toList());
 
             System.out.println(String.format("The precipitation potential is %s and the average temperature is %.2f degrees Celsius",
                    precipitationPotentialDescription(hourlyForecastData),
