@@ -1,14 +1,14 @@
 package com.erik.weatherforecast;
 
-import tk.plogitech.darksky.forecast.model.DataPoint;
+import tk.plogitech.darksky.forecast.model.HourlyDataPoint;
 
 import java.time.Instant;
 
 abstract class WeatherDataTest {
 
 
-    static DataPoint dataPoint(Double precipitationProbability, Double temperature, Instant time, String summary) {
-        DataPoint dataPoint = new DataPoint();
+    static HourlyDataPoint dataPoint(Double precipitationProbability, Double temperature, Instant time, String summary) {
+        HourlyDataPoint dataPoint = new HourlyDataPoint();
         dataPoint.setPrecipProbability(precipitationProbability);
         dataPoint.setTemperature(temperature);
         dataPoint.setTime(time);

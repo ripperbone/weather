@@ -1,6 +1,7 @@
 package com.erik.weatherforecast;
 
 import tk.plogitech.darksky.forecast.model.DataPoint;
+import tk.plogitech.darksky.forecast.model.HourlyDataPoint;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -16,28 +17,28 @@ public class WeatherDataSummarizer {
     private static final ZoneId TIME_ZONE_US_CENTRAL = ZoneId.of("US/Central");
 
 
-    private static boolean precipitationPotentialHigh(List<DataPoint> dataPoints) {
+    private static boolean precipitationPotentialHigh(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().anyMatch(dataPoint -> dataPoint.getPrecipProbability() >= 0.3);
     }
 
-    public static String precipitationPotentialDescription(List<DataPoint> dataPoints) {
+    public static String precipitationPotentialDescription(List<HourlyDataPoint> dataPoints) {
         return precipitationPotentialHigh(dataPoints) ? "high" : "low";
     }
 
-    public static double averageTemperature(List<DataPoint> dataPoints) {
+    public static double averageTemperature(List<HourlyDataPoint> dataPoints) {
         return getTemperatures(dataPoints).stream().mapToDouble(Double::doubleValue).average().orElse(0);
         // another option would be getApparentTemperature instead of getTemperature
     }
 
-    private static List<Double> getTemperatures(List<DataPoint> dataPoints) {
+    private static List<Double> getTemperatures(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().map(DataPoint::getTemperature).collect(Collectors.toList());
     }
 
-    private static List<Double> getPrecipitationProbabilities(List<DataPoint> dataPoints) {
+    private static List<Double> getPrecipitationProbabilities(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().map(DataPoint::getPrecipProbability).collect(Collectors.toList());
     }
 
-    public static List<String> buildSummary(List<DataPoint> dataPoints) {
+    public static List<String> buildSummary(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().map(dataPoint -> String.format("%s: %s %.2f°C %.2f",
                 formatDateTime(dataPoint.getTime()), dataPoint.getSummary(), dataPoint.getTemperature(), dataPoint.getPrecipProbability()))
                 .collect(Collectors.toList());

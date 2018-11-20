@@ -4,7 +4,8 @@
 
 
 Run locally with:
-`./gradlew run -PapiKey=[your API key]`
+* First, create a file in `src/main/resources` called api_key.txt that contains your DarkSky.net API key.
+* Then do `./gradlew run`
 
 
 Package it up with:

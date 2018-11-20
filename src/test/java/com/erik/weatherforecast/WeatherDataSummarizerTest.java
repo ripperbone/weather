@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import tk.plogitech.darksky.forecast.model.DataPoint;
+import tk.plogitech.darksky.forecast.model.HourlyDataPoint;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class WeatherDataSummarizerTest extends WeatherDataTest {
     @Test
     public void whenWeatherDataContainsChanceOfPrecipitation_thenExpectedMessageIsReturned() {
 
-        List<DataPoint> dataPoints = Arrays.asList(
+        List<HourlyDataPoint> dataPoints = Arrays.asList(
                 dataPoint(0.1, 60.0, NOW, "Clear"),
                 dataPoint(0.2, 40.0, NOW, "Clear"),
                 dataPoint(0.3, 70.0, NOW, "Rain"));
@@ -34,7 +34,7 @@ public class WeatherDataSummarizerTest extends WeatherDataTest {
 
     @Test
     public void whenWeatherDataHasLowChanceOfPrecipitation_thenExpectedMessageIsReturned() {
-        List<DataPoint> dataPoints = Arrays.asList(
+        List<HourlyDataPoint> dataPoints = Arrays.asList(
                 dataPoint(0.1, 60.0, NOW, "Clear"),
                 dataPoint(0.2, 40.0, NOW, "Clear"),
                 dataPoint(0.2, 70.0, NOW, "Clear"));
@@ -45,7 +45,7 @@ public class WeatherDataSummarizerTest extends WeatherDataTest {
 
     @Test
     public void whenRetrievingAverageTemperature_thenExpectedValueIsReturned() {
-        List<DataPoint> dataPoints = Arrays.asList(
+        List<HourlyDataPoint> dataPoints = Arrays.asList(
                 dataPoint(0.1, 60.0, NOW, "Clear"),
                 dataPoint(0.2, 90.0, NOW, "Clear"),
                 dataPoint(0.3, 30.0, NOW, "Rain"));
@@ -57,7 +57,7 @@ public class WeatherDataSummarizerTest extends WeatherDataTest {
     public void whenRetrievingSummary_thenExpectedSummaryIsReturned() {
 
 
-        List<DataPoint> dataPoints = Arrays.asList(
+        List<HourlyDataPoint> dataPoints = Arrays.asList(
                 dataPoint(0.1, 60.0, NOW, "Clear"),
                 dataPoint(0.2, 90.0, NOW, "Clear"),
                 dataPoint(0.3, 30.0, NOW, "Rain"));
