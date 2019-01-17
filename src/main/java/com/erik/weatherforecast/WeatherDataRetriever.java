@@ -31,11 +31,11 @@ public class WeatherDataRetriever {
         return new GeoCoordinates(new Longitude(-88.2319), new Latitude(43.010));
     }
 
-    public static List<HourlyDataPoint> retrieveHourlyForecast(GeoCoordinates location) throws ForecastException {
+    public static List<HourlyDataPoint> retrieveHourlyForecast(GeoCoordinates location) throws ForecastException, InterruptedException {
         return retrieveForecast(location).getHourly().getData();
     }
 
-    private static Forecast retrieveForecast(GeoCoordinates location) throws ForecastException {
+    private static Forecast retrieveForecast(GeoCoordinates location) throws ForecastException, InterruptedException {
 
 
         InputStream apiKeyInputStream = THIS_CLASS.getResourceAsStream(API_KEY_FILE);
@@ -51,11 +51,28 @@ public class WeatherDataRetriever {
             throw new ApiKeyMissingException(ex);
         }
 
-        return CLIENT.forecast(new ForecastRequestBuilder()
-                .key(new APIKey(apiKey))
-                .location(location)
-                .language(ForecastRequestBuilder.Language.en)
-                .units(ForecastRequestBuilder.Units.si) // Use Units.us for Farenheit, Units.si for Celsius
-                .build());
+        final int maxAttempts = 5;
+        int attemptCounter = 0;
+
+        while (true) {
+            try {
+                return CLIENT.forecast(new ForecastRequestBuilder()
+                        .key(new APIKey(apiKey))
+                        .location(location)
+                        .language(ForecastRequestBuilder.Language.en)
+                        .units(ForecastRequestBuilder.Units.si) // Use Units.us for Farenheit, Units.si for Celsius
+                        .build());
+            } catch (ForecastException ex) {
+
+                if (attemptCounter < maxAttempts) {
+                    System.out.println("Exception when retrieving forecast! Details:" + ex);
+                    Thread.sleep(10000);
+                    attemptCounter++;
+                    continue;
+                } else {
+                    throw ex; // Exit if we can't get the data.
+                }
+            }
+        }
     }
 }
