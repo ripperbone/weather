@@ -6,6 +6,7 @@
 
 Run locally with:
 * First, create a file in `src/main/resources` called api_key.txt that contains your DarkSky.net API key.
+* Install redis. For example: `apt install redis-server`
 * Then do `./gradlew run`
 
 

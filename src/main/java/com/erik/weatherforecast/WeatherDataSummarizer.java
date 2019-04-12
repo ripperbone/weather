@@ -17,7 +17,7 @@ public class WeatherDataSummarizer {
     private static final ZoneId TIME_ZONE_US_CENTRAL = ZoneId.of("US/Central");
 
 
-    private static boolean precipitationPotentialHigh(List<HourlyDataPoint> dataPoints) {
+    public static boolean precipitationPotentialHigh(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().anyMatch(dataPoint -> dataPoint.getPrecipProbability() >= 0.3);
     }
 

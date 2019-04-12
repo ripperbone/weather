@@ -4,6 +4,7 @@ import static com.erik.weatherforecast.WeatherDataRetriever.waukesha;
 import static com.erik.weatherforecast.WeatherDataSummarizer.averageTemperature;
 import static com.erik.weatherforecast.WeatherDataSummarizer.buildSummary;
 import static com.erik.weatherforecast.WeatherDataSummarizer.precipitationPotentialDescription;
+import static com.erik.weatherforecast.WeatherDataSummarizer.precipitationPotentialHigh;
 ;
 
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.erik.weatherforecast.exception.ApiKeyMissingException;
+import com.erik.weatherforecast.persistence.RedisWeatherPersistence;
 import tk.plogitech.darksky.forecast.APIKey;
 import tk.plogitech.darksky.forecast.model.HourlyDataPoint;
 
@@ -31,6 +33,8 @@ public class App {
                 .stream().filter(dataPoint -> dataPoint.getTime().isBefore(Instant.now().plus(12, ChronoUnit.HOURS)))
                 .collect(Collectors.toList());
 
+        (new RedisWeatherPersistence())
+                .setWeatherData(averageTemperature(hourlyForecastData), precipitationPotentialHigh(hourlyForecastData), Instant.now());
 
         System.out.println(String.format("The precipitation potential is %s and the average temperature is %.2f degrees Celsius",
                precipitationPotentialDescription(hourlyForecastData),
