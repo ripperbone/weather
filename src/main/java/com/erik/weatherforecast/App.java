@@ -5,7 +5,6 @@ import static com.erik.weatherforecast.WeatherDataSummarizer.averageTemperature;
 import static com.erik.weatherforecast.WeatherDataSummarizer.buildSummary;
 import static com.erik.weatherforecast.WeatherDataSummarizer.precipitationPotentialDescription;
 import static com.erik.weatherforecast.WeatherDataSummarizer.precipitationPotentialHigh;
-;
 
 import java.io.BufferedReader;
 import java.io.IOException;
