@@ -22,8 +22,7 @@ import tk.plogitech.darksky.forecast.model.HourlyDataPoint;
 
 public class App {
 
-    private static final Class THIS_CLASS = WeatherDataRetriever.class.getClass();
-    private static final String API_KEY_FILE = "/api_key.txt";
+    private static final String API_KEY_FILE = "api_key.txt";
 
     public static void main(String[] args) throws Exception {
 
@@ -43,7 +42,7 @@ public class App {
     }
 
     private static APIKey getApiKey() {
-        InputStream apiKeyInputStream = THIS_CLASS.getResourceAsStream(API_KEY_FILE);
+        InputStream apiKeyInputStream = App.class.getResourceAsStream(API_KEY_FILE);
 
         if (apiKeyInputStream == null) {
             throw new ApiKeyMissingException("API key file is missing.");

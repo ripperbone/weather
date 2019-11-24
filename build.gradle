@@ -20,4 +20,7 @@ checkstyle {
    toolVersion = '8.8'
 }
 
+sourceCompatibility = '1.11'
+targetCompatibility = '1.11'
+
 mainClassName = 'com.erik.weatherforecast.App'
