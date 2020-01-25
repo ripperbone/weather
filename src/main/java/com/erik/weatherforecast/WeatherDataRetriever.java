@@ -48,7 +48,7 @@ public class WeatherDataRetriever {
                         .key(apiKey)
                         .location(location)
                         .language(ForecastRequestBuilder.Language.en)
-                        .units(ForecastRequestBuilder.Units.si) // Use Units.us for Farenheit, Units.si for Celsius
+                        .units(ForecastRequestBuilder.Units.si) // Use Units.us for Fahrenheit, Units.si for Celsius
                         .build());
             } catch (ForecastException ex) {
 
