@@ -8,7 +8,6 @@ import tk.plogitech.darksky.forecast.model.Latitude;
 import tk.plogitech.darksky.forecast.model.Longitude;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 abstract class WeatherDataTest {
