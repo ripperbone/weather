@@ -18,7 +18,7 @@ public class WeatherDataSummarizer {
 
 
     public static boolean precipitationPotentialHigh(List<HourlyDataPoint> dataPoints) {
-        return dataPoints.stream().anyMatch(dataPoint -> dataPoint.getPrecipProbability() >= 0.3);
+        return dataPoints.stream().anyMatch(dataPoint -> dataPoint.getPrecipProbability() >= 0.1);
     }
 
     public static String precipitationPotentialDescription(List<HourlyDataPoint> dataPoints) {

@@ -35,9 +35,9 @@ public class WeatherDataSummarizerTest extends WeatherDataTest {
     @Test
     public void whenWeatherDataHasLowChanceOfPrecipitation_thenExpectedMessageIsReturned() {
         List<HourlyDataPoint> dataPoints = Arrays.asList(
-                dataPoint(0.1, 60.0, NOW, "Clear"),
-                dataPoint(0.2, 40.0, NOW, "Clear"),
-                dataPoint(0.2, 70.0, NOW, "Clear"));
+                dataPoint(0.01, 60.0, NOW, "Clear"),
+                dataPoint(0.01, 40.0, NOW, "Clear"),
+                dataPoint(0.02, 70.0, NOW, "Clear"));
 
         assertEquals("low", precipitationPotentialDescription(dataPoints));
 
