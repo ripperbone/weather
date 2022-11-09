@@ -16,6 +16,9 @@ public class WeatherDataSummarizer {
 
     private static final ZoneId TIME_ZONE_US_CENTRAL = ZoneId.of("US/Central");
 
+    public static double celsiusToFahrenheit(double celsius) {
+        return ((celsius * 9 / 5) + 32);
+    }
 
     public static boolean precipitationPotentialHigh(List<HourlyDataPoint> dataPoints) {
         return dataPoints.stream().anyMatch(dataPoint -> dataPoint.getPrecipProbability() >= 0.1);

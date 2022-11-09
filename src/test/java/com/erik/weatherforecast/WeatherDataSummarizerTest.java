@@ -1,8 +1,6 @@
 package com.erik.weatherforecast;
 
-import static com.erik.weatherforecast.WeatherDataSummarizer.averageTemperature;
-import static com.erik.weatherforecast.WeatherDataSummarizer.buildSummary;
-import static com.erik.weatherforecast.WeatherDataSummarizer.precipitationPotentialDescription;
+import static com.erik.weatherforecast.WeatherDataSummarizer.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,6 +17,17 @@ import java.util.List;
 public class WeatherDataSummarizerTest extends WeatherDataTest {
 
     private static final Instant NOW = Instant.now();
+
+
+    @Test
+    public void whenConvertingCelsiusToFahrenheit_thenExpectedValueIsReturned() {
+        assertEquals(32, celsiusToFahrenheit(0), 0);
+        assertEquals(69.8, celsiusToFahrenheit(21), 0);
+        assertEquals(65.2208, celsiusToFahrenheit(18.456), 0);
+        assertEquals(152.6, celsiusToFahrenheit(67), 0);
+        assertEquals(23, celsiusToFahrenheit(-5), 0);
+        assertEquals(-4, celsiusToFahrenheit(-20), 0);
+    }
 
     @Test
     public void whenWeatherDataContainsChanceOfPrecipitation_thenExpectedMessageIsReturned() {
